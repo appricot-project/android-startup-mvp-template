@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.appricot.designsystem.theme2.StartupHubTheme
+import ru.appricot.designsystem.theme.StartupHubTheme
 import ru.apprictor.startuphub.home.BuildConfig
 
 @Composable
@@ -45,23 +45,22 @@ fun StartupCard(startup: StartupModel, modifier: Modifier = Modifier, onItemClic
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         ),
-        shape = MaterialTheme.shapes.medium
+        shape = MaterialTheme.shapes.medium,
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
         ) {
             // Название стартапа
             Text(
                 text = startup.name ?: "Unknown",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -70,42 +69,42 @@ fun StartupCard(startup: StartupModel, modifier: Modifier = Modifier, onItemClic
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 // Категория с иконкой
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
                         imageVector = getCategoryIcon(startup.category),
                         contentDescription = "Category icon",
                         modifier = Modifier.size(16.dp),
-                        tint = getCategoryColor(startup.category)
+                        tint = getCategoryColor(startup.category),
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = startup.category ?: "N/A",
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
-                        color = getCategoryColor(startup.category)
+                        color = getCategoryColor(startup.category),
                     )
                 }
 
                 // Город с иконкой
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
                         imageVector = Icons.Default.LocationOn,
                         contentDescription = "Location",
                         modifier = Modifier.size(16.dp),
-                        tint = MaterialTheme.colorScheme.secondary
+                        tint = MaterialTheme.colorScheme.secondary,
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = startup.city ?: "Unknown",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.secondary
+                        color = MaterialTheme.colorScheme.secondary,
                     )
                 }
             }
@@ -115,7 +114,7 @@ fun StartupCard(startup: StartupModel, modifier: Modifier = Modifier, onItemClic
                 Text(
                     text = "ID: ${startup.id}",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             }
         }
@@ -149,8 +148,8 @@ private fun StartupItemAIPreview() {
                     id = 1,
                     name = "NeuroGen",
                     category = "AI",
-                    city = "Moscow"
-                )
+                    city = "Moscow",
+                ),
             )
         }
     }
@@ -167,8 +166,8 @@ private fun StartupItemFintechPreview() {
                     id = 5,
                     name = "PayWave",
                     category = "Fintech",
-                    city = "Washington"
-                )
+                    city = "Washington",
+                ),
             )
         }
     }
@@ -185,8 +184,8 @@ private fun StartupItemHealthPreview() {
                     id = 7,
                     name = "HeartWell",
                     category = "Health",
-                    city = "London"
-                )
+                    city = "London",
+                ),
             )
         }
     }
@@ -202,8 +201,8 @@ private fun StartupItemLongNamePreview() {
                     id = 10,
                     name = "Very Long Startup Name That Should Be Truncated",
                     category = "AI",
-                    city = "San Francisco"
-                )
+                    city = "San Francisco",
+                ),
             )
         }
     }
@@ -220,8 +219,8 @@ private fun StartupItemNullValuesPreview() {
                     id = 11,
                     name = null,
                     category = null,
-                    city = null
-                )
+                    city = null,
+                ),
             )
         }
     }

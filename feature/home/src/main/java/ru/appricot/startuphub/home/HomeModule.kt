@@ -21,17 +21,17 @@ class HomeModule {
     fun provideEntryProviderInstaller(): EntryProviderInstaller = { navigator ->
         entry<Home> {
             HomeScreen(
-                onDetailsClick = { navigator.navigate(StartupDetails(it)) }
+                onDetailsClick = { navigator.navigate(StartupDetails(it)) },
             )
         }
         entry<StartupDetails> { key ->
             StartupDetailsScreen(
                 viewModel = hiltViewModel<StartupDetailsViewModel, StartupDetailsViewModel.Factory>(
-                    key = key.id.toString()
+                    key = key.id.toString(),
                 ) {
                     it.create(key.id)
                 },
-                onBackClick = { navigator.goBack() }
+                onBackClick = { navigator.goBack() },
             )
         }
     }

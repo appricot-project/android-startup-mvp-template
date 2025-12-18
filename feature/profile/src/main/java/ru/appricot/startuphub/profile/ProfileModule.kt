@@ -18,7 +18,7 @@ class ProfileModule {
     fun provideEntryProviderInstaller(): EntryProviderInstaller = { navigator ->
         entry<Profile> {
             ProfileScreen(
-                onHomeClick = { navigator.navigate(Home) }
+                onHomeClick = { navigator.navigate(Home) },
             )
         }
     }

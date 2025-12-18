@@ -3,12 +3,12 @@ package ru.appricot.startuphub.home.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor() : ViewModel() {
@@ -20,6 +20,6 @@ class HomeViewModel @Inject constructor() : ViewModel() {
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = StartupsUiState.Loading
+                initialValue = StartupsUiState.Loading,
             )
 }

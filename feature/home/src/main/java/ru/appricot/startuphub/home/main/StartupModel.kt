@@ -16,7 +16,7 @@ data class StartupModel(val id: Long, val name: String?, val category: String?, 
             // Health startups
             StartupModel(7, "HeartWell", "Health", "London"),
             StartupModel(8, "NewLife", "Health", "Washington"),
-            StartupModel(9, "Free Life", "Health", "Moscow")
+            StartupModel(9, "Free Life", "Health", "Moscow"),
         )
     }
 }

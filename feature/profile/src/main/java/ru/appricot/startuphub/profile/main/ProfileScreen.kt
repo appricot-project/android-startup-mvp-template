@@ -25,7 +25,7 @@ fun ProfileScreen(onHomeClick: (String) -> Unit, modifier: Modifier = Modifier, 
     Content(
         startupsState = startupsState,
         onHomeClick = onHomeClick,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -33,7 +33,7 @@ fun ProfileScreen(onHomeClick: (String) -> Unit, modifier: Modifier = Modifier, 
 fun Content(startupsState: StartupsUiState, onHomeClick: (String) -> Unit, modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier,
-        topBar = { TopAppBar(title = "Profile") }
+        topBar = { TopAppBar(title = "Profile") },
     ) { paddingValues ->
         when (startupsState) {
             is StartupsUiState.Loading -> BasicLoader()
@@ -50,7 +50,7 @@ fun Content(startupsState: StartupsUiState, onHomeClick: (String) -> Unit, modif
                         Text(
                             text = "Profile Screen",
                             style = MaterialTheme.typography.headlineMedium,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onSurface,
                         )
 
                         BasicButton(
@@ -58,9 +58,9 @@ fun Content(startupsState: StartupsUiState, onHomeClick: (String) -> Unit, modif
                             text = "To Home",
                             onClick = {
                                 onHomeClick("12345")
-                            }
+                            },
                         )
-                    }
+                    },
                 )
         }
     }

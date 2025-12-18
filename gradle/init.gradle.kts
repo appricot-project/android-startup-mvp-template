@@ -21,15 +21,17 @@ rootProject {
                 target("**/*.kt")
                 targetExclude("**/build/**/*.kt")
                 ktlint(ktlintVersion)
-                    .editorConfigOverride(
-                        mapOf(
-                            "ktlint_standard_condition-wrapping" to "disabled",
-                        ),
-                    )
                     .customRuleSets(
                         listOf(
                             "io.nlopez.compose.rules:ktlint:0.5.2"
                         )
+                    )
+                    .editorConfigOverride(
+                        mapOf(
+                            "ktlint_standard_condition-wrapping" to "disabled",
+                            "ktlint_standard_function-naming" to "disabled",
+                            "ktlint_compose_compositionlocal-allowlist" to "disabled"
+                        ),
                     )
             }
             format("kts") {

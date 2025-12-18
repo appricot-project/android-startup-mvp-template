@@ -35,17 +35,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
-import ru.appricot.designsystem.theme2.StartupHubTheme
+import ru.appricot.designsystem.theme.StartupHubTheme
 
 @Composable
 fun NavigationBar(
     selectedKey: NavKey,
     onSelectKey: (NavKey) -> Unit,
     destinations: Map<NavKey, NavBarItem>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     BottomAppBar(
-        modifier = modifier
+        modifier = modifier,
     ) {
         destinations.forEach { (topLevelDestination, data) ->
             NavigationBarItem(
@@ -56,12 +56,12 @@ fun NavigationBar(
                 icon = {
                     Icon(
                         imageVector = data.icon,
-                        contentDescription = data.title
+                        contentDescription = data.title,
                     )
                 },
                 label = {
                     Text(data.title)
-                }
+                },
             )
         }
     }
@@ -91,7 +91,7 @@ private object Settings : NavKey
     name = "NavigationBar - 3 Items (Dark)",
     group = "Standard",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 private fun NavigationBar3ItemsPreview() {
@@ -100,14 +100,14 @@ private fun NavigationBar3ItemsPreview() {
             val destinations = mapOf(
                 Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
                 Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
-                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
             )
 
             NavigationBar(
                 selectedKey = Home,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -121,14 +121,14 @@ private fun NavigationBarSelectedHomePreview() {
             val destinations = mapOf(
                 Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
                 Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
-                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
             )
 
             NavigationBar(
                 selectedKey = Home,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -142,14 +142,14 @@ private fun NavigationBarSelectedSearchPreview() {
             val destinations = mapOf(
                 Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
                 Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
-                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
             )
 
             NavigationBar(
                 selectedKey = Search,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -163,14 +163,14 @@ private fun NavigationBarSelectedProfilePreview() {
             val destinations = mapOf(
                 Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
                 Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
-                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
             )
 
             NavigationBar(
                 selectedKey = Profile,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -181,7 +181,7 @@ private fun NavigationBarSelectedProfilePreview() {
     name = "NavigationBar - 4 Items (Dark)",
     group = "Item Count",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 private fun NavigationBar4ItemsPreview() {
@@ -191,14 +191,14 @@ private fun NavigationBar4ItemsPreview() {
                 Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
                 Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
                 Notifications to NavBarItem(Icons.Default.Notifications, "Notifications", "Notifications"),
-                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
             )
 
             NavigationBar(
                 selectedKey = Search,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -209,7 +209,7 @@ private fun NavigationBar4ItemsPreview() {
     name = "NavigationBar - 5 Items (Dark)",
     group = "Item Count",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 private fun NavigationBar5ItemsPreview() {
@@ -220,14 +220,14 @@ private fun NavigationBar5ItemsPreview() {
                 Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
                 Notifications to NavBarItem(Icons.Default.Notifications, "Notifications", "Notifications"),
                 Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
-                Settings to NavBarItem(Icons.Default.Settings, "Settings", "Settings")
+                Settings to NavBarItem(Icons.Default.Settings, "Settings", "Settings"),
             )
 
             NavigationBar(
                 selectedKey = Notifications,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -240,14 +240,14 @@ private fun NavigationBar2ItemsPreview() {
         Surface {
             val destinations = mapOf(
                 Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
-                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
             )
 
             NavigationBar(
                 selectedKey = Profile,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -262,14 +262,14 @@ private fun NavigationBarCustomIconsPreview() {
                 Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
                 Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
                 Notifications to NavBarItem(Icons.Default.Notifications, "Notifications", "Notifications"),
-                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
             )
 
             NavigationBar(
                 selectedKey = Search,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -283,14 +283,14 @@ private fun NavigationBarLongLabelsPreview() {
             val destinations = mapOf(
                 Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
                 Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
-                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
             )
 
             NavigationBar(
                 selectedKey = Home,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -303,14 +303,14 @@ private fun NavigationBarVeryLongLabelsPreview() {
         Surface {
             val destinations = mapOf(
                 Home to NavBarItem(Icons.Default.Home, "Home Dashboard", "Home"),
-                Search to NavBarItem(Icons.Default.Search, "Search Dashboard", "Search")
+                Search to NavBarItem(Icons.Default.Search, "Search Dashboard", "Search"),
             )
 
             NavigationBar(
                 selectedKey = Search,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -322,23 +322,23 @@ private fun NavigationBarDifferentWidthsPreview() {
     StartupHubTheme {
         Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text("Width: 320dp", style = MaterialTheme.typography.labelSmall)
             Surface(
                 modifier = Modifier.width(320.dp),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(16.dp),
             ) {
                 val destinations = mapOf(
                     Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
                     Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
-                    Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                    Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
                 )
 
                 NavigationBar(
                     selectedKey = Home,
                     onSelectKey = {},
-                    destinations = destinations
+                    destinations = destinations,
                 )
             }
 
@@ -347,17 +347,17 @@ private fun NavigationBarDifferentWidthsPreview() {
             Text("Width: 240dp", style = MaterialTheme.typography.labelSmall)
             Surface(
                 modifier = Modifier.width(240.dp),
-                shape = RoundedCornerBottomShape(16.dp)
+                shape = RoundedCornerBottomShape(16.dp),
             ) {
                 val destinations = mapOf(
                     Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
-                    Profile to NavBarItem(Icons.Default.Person, "Me", "Profile")
+                    Profile to NavBarItem(Icons.Default.Person, "Me", "Profile"),
                 )
 
                 NavigationBar(
                     selectedKey = Profile,
                     onSelectKey = {},
-                    destinations = destinations
+                    destinations = destinations,
                 )
             }
         }
@@ -370,7 +370,7 @@ private fun RoundedCornerBottomShape(cornerSize: Dp) = RoundedCornerShape(
     topStart = cornerSize,
     topEnd = cornerSize,
     bottomStart = 0.dp,
-    bottomEnd = 0.dp
+    bottomEnd = 0.dp,
 )
 
 @Preview(name = "In Context Screen", group = "Integration", showBackground = true, heightDp = 640)
@@ -378,7 +378,7 @@ private fun RoundedCornerBottomShape(cornerSize: Dp) = RoundedCornerShape(
 private fun NavigationBarInContextPreview() {
     StartupHubTheme {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             // Имитация контента экрана
             Column(
@@ -386,16 +386,16 @@ private fun NavigationBarInContextPreview() {
                     .fillMaxSize()
                     .padding(bottom = 56.dp), // Место для BottomBar
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
             ) {
                 Text(
                     text = "Main Content",
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.headlineMedium,
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "Navigation bar is at the bottom",
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
 
@@ -403,19 +403,19 @@ private fun NavigationBarInContextPreview() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
+                    .align(Alignment.BottomCenter),
             ) {
                 val destinations = mapOf<NavKey, NavBarItem>(
                     Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
                     Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
                     Notifications to NavBarItem(Icons.Default.Notifications, "Notifications", "Notifications"),
-                    Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                    Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
                 )
 
                 NavigationBar(
                     selectedKey = Home,
                     onSelectKey = {},
-                    destinations = destinations
+                    destinations = destinations,
                 )
             }
         }
@@ -432,25 +432,25 @@ private fun NavigationBarInteractivePreview() {
             Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
             Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
             Notifications to NavBarItem(Icons.Default.Notifications, "Notifications", "Notifications"),
-            Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+            Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
         )
 
         Column(
             modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             // Отображение текущего выбора
             Text(
                 text = "Selected: ${selectedKey::class.simpleName}",
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             )
 
             // Инструкция
             Text(
                 text = "Click on navigation items below to test selection",
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -458,12 +458,12 @@ private fun NavigationBarInteractivePreview() {
             // NavigationBar
             Surface(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(16.dp),
             ) {
                 NavigationBar(
                     selectedKey = selectedKey,
                     onSelectKey = { newKey -> selectedKey = newKey },
-                    destinations = destinations
+                    destinations = destinations,
                 )
             }
         }
@@ -479,14 +479,14 @@ private fun NavigationBarQuickPreview() {
             val destinations = mapOf(
                 Home to NavBarItem(Icons.Default.Home, "Home", "Home"),
                 Search to NavBarItem(Icons.Default.Search, "Search", "Search"),
-                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile")
+                Profile to NavBarItem(Icons.Default.Person, "Profile", "Profile"),
             )
 
             NavigationBar(
                 selectedKey = Home,
                 onSelectKey = {},
                 destinations = destinations,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }

@@ -20,15 +20,15 @@ fun TopAppBar(modifier: Modifier = Modifier, title: String? = null, titleTextSty
                 Text(
                     text = it,
                     style = titleTextStyle,
-                    color = HubAppTheme.colors.primaryColorText
+                    color = HubAppTheme.colors.primaryColorText,
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = HubAppTheme.colors.primaryBackground,
+            containerColor = HubAppTheme.colors.secondaryBackground,
             navigationIconContentColor = HubAppTheme.colors.primaryColorText,
             titleContentColor = HubAppTheme.colors.primaryColorText,
-            actionIconContentColor = HubAppTheme.colors.primaryColorText
-        )
+            actionIconContentColor = HubAppTheme.colors.primaryColorText,
+        ),
     )
 }

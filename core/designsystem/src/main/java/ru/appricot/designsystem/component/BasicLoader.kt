@@ -18,11 +18,11 @@ fun BasicLoader(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surfaceVariant),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator(
             color = HubAppTheme.colors.primaryColor,
-            modifier = Modifier.size(40.dp)
+            modifier = Modifier.size(40.dp),
         )
     }
 }

@@ -26,7 +26,7 @@ fun rememberNavigationState(startRoute: NavKey, topLevelRoutes: Set<NavKey>): Na
     val topLevelRoute = rememberSerializable(
         startRoute,
         topLevelRoutes,
-        serializer = MutableStateSerializer(NavKeySerializer())
+        serializer = MutableStateSerializer(NavKeySerializer()),
     ) {
         mutableStateOf(startRoute)
     }
@@ -37,7 +37,7 @@ fun rememberNavigationState(startRoute: NavKey, topLevelRoutes: Set<NavKey>): Na
         NavigationState(
             startRoute = startRoute,
             topLevelRoute = topLevelRoute,
-            backStacks = backStacks
+            backStacks = backStacks,
         )
     }
 }
@@ -66,12 +66,12 @@ class NavigationState(val startRoute: NavKey, topLevelRoute: MutableState<NavKey
 fun NavigationState.toEntries(entryProvider: (NavKey) -> NavEntry<NavKey>): SnapshotStateList<NavEntry<NavKey>> {
     val decoratedEntries = backStacks.mapValues { (_, stack) ->
         val decorators = listOf(
-            rememberSaveableStateHolderNavEntryDecorator<NavKey>()
+            rememberSaveableStateHolderNavEntryDecorator<NavKey>(),
         )
         rememberDecoratedNavEntries(
             backStack = stack,
             entryDecorators = decorators,
-            entryProvider = entryProvider
+            entryProvider = entryProvider,
         )
     }
 

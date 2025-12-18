@@ -19,7 +19,7 @@ fun StartupDetailsScreen(viewModel: StartupDetailsViewModel, onBackClick: () -> 
     Content(
         id = id,
         onButtonClick = onBackClick,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -36,13 +36,13 @@ fun Content(id: Long?, onButtonClick: () -> Unit, modifier: Modifier = Modifier)
             Text(
                 text = "Details Screen: $id",
                 style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
             WhiteButton(
                 text = "Back",
                 modifier = Modifier.padding(16.dp),
-                onClick = { onButtonClick() }
+                onClick = { onButtonClick() },
             )
-        }
+        },
     )
 }

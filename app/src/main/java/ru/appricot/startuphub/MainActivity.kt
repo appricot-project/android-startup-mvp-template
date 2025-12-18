@@ -18,16 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import ru.appricot.designsystem.component.NavBarItem
 import ru.appricot.designsystem.component.NavigationBar
-import ru.appricot.designsystem.theme2.StartupHubTheme
+import ru.appricot.designsystem.theme.StartupHubTheme
 import ru.appricot.navigation.EntryProviderInstaller
 import ru.appricot.navigation.Navigator
 import ru.appricot.navigation.rememberNavigationState
 import ru.appricot.navigation.toEntries
 import ru.appricot.profileapi.Profile
 import ru.appricot.startuphub.homeapi.Home
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
     private val topLevelRoots = mapOf(
         Home to NavBarItem(icon = Icons.Default.Home, title = "Home", description = "Home"),
-        Profile to NavBarItem(icon = Icons.Default.AccountCircle, title = "Profile", description = "Profile")
+        Profile to NavBarItem(icon = Icons.Default.AccountCircle, title = "Profile", description = "Profile"),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navigationState = rememberNavigationState(
                 startRoute = Home,
-                topLevelRoutes = topLevelRoots.keys
+                topLevelRoutes = topLevelRoots.keys,
             )
             val navigator = remember { Navigator(navigationState) }
             val entryProvider = entryProvider {
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                         onSelectKey = {
                             navigator.navigate(it)
                         },
-                        destinations = topLevelRoots
+                        destinations = topLevelRoots,
                     )
                 }) { paddingValues ->
                     NavDisplay(
@@ -84,7 +84,7 @@ class MainActivity : ComponentActivity() {
                             // Slide in from left when navigating back
                             slideInHorizontally(initialOffsetX = { -it }) togetherWith
                                 slideOutHorizontally(targetOffsetX = { it })
-                        }
+                        },
                     )
                 }
             }

@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.appricot.designsystem.theme.HubAppTheme
-import ru.appricot.designsystem.theme2.StartupHubTheme
+import ru.appricot.designsystem.theme.StartupHubTheme
 
 @Composable
 fun BasicButton(onClick: () -> Unit, modifier: Modifier = Modifier, text: String = "", enabled: Boolean = true) {
@@ -34,20 +34,20 @@ fun BasicButton(onClick: () -> Unit, modifier: Modifier = Modifier, text: String
             containerColor = HubAppTheme.colors.primaryColor,
             contentColor = HubAppTheme.colors.primaryBackground,
             disabledContainerColor = HubAppTheme.colors.inactiveColorBackground,
-            disabledContentColor = HubAppTheme.colors.inactiveColorText
+            disabledContentColor = HubAppTheme.colors.inactiveColorText,
         ),
         shape = RoundedCornerShape(12.dp),
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-        enabled = enabled
+        enabled = enabled,
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.bodySmall,
             color = if (enabled) HubAppTheme.colors.primaryBackground else HubAppTheme.colors.secondaryColorText,
-            modifier = Modifier.padding(vertical = 6.dp)
+            modifier = Modifier.padding(vertical = 6.dp),
         )
     }
 }
@@ -57,7 +57,7 @@ fun WhiteButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = MaterialTheme.typography.bodyMedium
+    textStyle: TextStyle = MaterialTheme.typography.bodyMedium,
 ) {
     Button(
         onClick = onClick,
@@ -68,14 +68,14 @@ fun WhiteButton(
         border = BorderStroke(1.dp, HubAppTheme.colors.primaryColorText),
         colors = ButtonDefaults.buttonColors(
             containerColor = HubAppTheme.colors.primaryBackground,
-            contentColor = HubAppTheme.colors.primaryColorText
+            contentColor = HubAppTheme.colors.primaryColorText,
         ),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
         Text(
             text = text,
             style = textStyle,
-            color = HubAppTheme.colors.primaryColorText
+            color = HubAppTheme.colors.primaryColorText,
         )
     }
 }
@@ -85,7 +85,7 @@ fun WhiteButton(
     name = "BasicButton - Disabled (Dark)",
     group = "BasicButton",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 private fun BasicButtonDisabledPreview() {
@@ -94,12 +94,12 @@ private fun BasicButtonDisabledPreview() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 BasicButton(
                     text = "Submit",
                     onClick = {},
-                    enabled = false
+                    enabled = false,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -107,7 +107,7 @@ private fun BasicButtonDisabledPreview() {
                 BasicButton(
                     text = "Save Changes",
                     onClick = {},
-                    enabled = false
+                    enabled = false,
                 )
             }
         }
@@ -122,12 +122,12 @@ private fun BasicButtonEmptyTextPreview() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 BasicButton(
                     text = "",
                     onClick = {},
-                    enabled = true
+                    enabled = true,
                 )
             }
         }
@@ -142,12 +142,12 @@ private fun BasicButtonLongTextPreview() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 BasicButton(
                     text = "This is a very long button text that should wrap or truncate",
                     onClick = {},
-                    enabled = true
+                    enabled = true,
                 )
             }
         }
@@ -163,12 +163,12 @@ private fun BasicButtonFixedWidthPreview() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 BasicButton(
                     text = "Center Button",
                     onClick = {},
-                    modifier = Modifier.width(200.dp)
+                    modifier = Modifier.width(200.dp),
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -176,7 +176,7 @@ private fun BasicButtonFixedWidthPreview() {
                 BasicButton(
                     text = "Small",
                     onClick = {},
-                    modifier = Modifier.width(100.dp)
+                    modifier = Modifier.width(100.dp),
                 )
             }
         }
@@ -190,7 +190,7 @@ private fun BasicButtonFixedWidthPreview() {
     name = "WhiteButton - Default (Dark)",
     group = "WhiteButton",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 private fun WhiteButtonDefaultPreview() {
@@ -199,18 +199,18 @@ private fun WhiteButtonDefaultPreview() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 WhiteButton(
                     text = "Cancel",
-                    onClick = {}
+                    onClick = {},
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 WhiteButton(
                     text = "Edit Profile",
-                    onClick = {}
+                    onClick = {},
                 )
             }
         }
@@ -225,12 +225,12 @@ private fun WhiteButtonCustomStylePreview() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 WhiteButton(
                     text = "Bold Button",
                     textStyle = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    onClick = {}
+                    onClick = {},
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -238,7 +238,7 @@ private fun WhiteButtonCustomStylePreview() {
                 WhiteButton(
                     text = "Small Button",
                     textStyle = MaterialTheme.typography.bodySmall,
-                    onClick = {}
+                    onClick = {},
                 )
             }
         }
@@ -254,12 +254,12 @@ private fun WhiteButtonFixedWidthPreview() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 WhiteButton(
                     text = "Medium",
                     onClick = {},
-                    modifier = Modifier.width(200.dp)
+                    modifier = Modifier.width(200.dp),
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -267,7 +267,7 @@ private fun WhiteButtonFixedWidthPreview() {
                 WhiteButton(
                     text = "X-Small",
                     onClick = {},
-                    modifier = Modifier.width(80.dp)
+                    modifier = Modifier.width(80.dp),
                 )
             }
         }
@@ -282,11 +282,11 @@ private fun WhiteButtonLongTextPreview() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 WhiteButton(
                     text = "Button with very long text that might not fit",
-                    onClick = {}
+                    onClick = {},
                 )
             }
         }
@@ -301,7 +301,7 @@ private fun WhiteButtonLongTextPreview() {
     group = "Comparison",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true,
-    widthDp = 360
+    widthDp = 360,
 )
 @Composable
 private fun ButtonsComparisonPreview() {
@@ -310,18 +310,18 @@ private fun ButtonsComparisonPreview() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 Text(
                     text = "Basic Buttons",
                     style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp),
                 )
 
                 BasicButton(
                     text = "Enabled Basic Button",
                     onClick = {},
-                    enabled = true
+                    enabled = true,
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -329,7 +329,7 @@ private fun ButtonsComparisonPreview() {
                 BasicButton(
                     text = "Disabled Basic Button",
                     onClick = {},
-                    enabled = false
+                    enabled = false,
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -337,12 +337,12 @@ private fun ButtonsComparisonPreview() {
                 Text(
                     text = "White Buttons",
                     style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp),
                 )
 
                 WhiteButton(
                     text = "White Button",
-                    onClick = {}
+                    onClick = {},
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -350,7 +350,7 @@ private fun ButtonsComparisonPreview() {
                 WhiteButton(
                     text = "White Button with Custom Style",
                     textStyle = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                    onClick = {}
+                    onClick = {},
                 )
             }
         }
@@ -365,22 +365,22 @@ private fun ButtonsInRowPreview() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     BasicButton(
                         text = "Save",
                         onClick = {},
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
 
                     WhiteButton(
                         text = "Cancel",
                         onClick = {},
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                 }
 
@@ -388,18 +388,18 @@ private fun ButtonsInRowPreview() {
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     WhiteButton(
                         text = "Back",
                         onClick = {},
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
 
                     BasicButton(
                         text = "Next",
                         onClick = {},
-                        modifier = Modifier.weight(2f)
+                        modifier = Modifier.weight(2f),
                     )
                 }
             }

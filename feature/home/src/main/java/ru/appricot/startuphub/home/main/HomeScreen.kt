@@ -25,7 +25,7 @@ fun HomeScreen(onDetailsClick: (Long) -> Unit, modifier: Modifier = Modifier, vi
     Content(
         startupsState = startupsState,
         onDetailsClick = { onDetailsClick(it.id) },
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -33,7 +33,7 @@ fun HomeScreen(onDetailsClick: (Long) -> Unit, modifier: Modifier = Modifier, vi
 fun Content(startupsState: StartupsUiState, onDetailsClick: (StartupModel) -> Unit, modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier,
-        topBar = { TopAppBar(title = "Home") }
+        topBar = { TopAppBar(title = "Home") },
     ) { paddingValues ->
         when (startupsState) {
             is StartupsUiState.Loading -> BasicLoader()
@@ -49,20 +49,20 @@ fun Content(startupsState: StartupsUiState, onDetailsClick: (StartupModel) -> Un
                     content = {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             items(
                                 items = startupsState.list,
-                                key = { it.id }
+                                key = { it.id },
                             ) { startup ->
                                 StartupCard(
                                     startup = startup,
                                     onItemClick = onDetailsClick,
-                                    modifier = Modifier.animateItem()
+                                    modifier = Modifier.animateItem(),
                                 )
                             }
                         }
-                    }
+                    },
                 )
         }
     }
