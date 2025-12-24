@@ -55,5 +55,10 @@ gradlePlugin {
             id = "appricot.android.application.firebase"
             implementationClass = "AndroidApplicationFirebaseConventionPlugin"
         }
+        register("androidApollo") {
+            id = "appricot.apollo"
+            implementationClass = "AndroidApolloConventionPlugin"
+        }
+
     }
 }

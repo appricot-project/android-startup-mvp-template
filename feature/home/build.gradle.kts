@@ -9,4 +9,5 @@ android {
 
 dependencies {
     implementation(project(":feature:home_api"))
+    implementation(project(":data:startups"))
 }

@@ -7,4 +7,4 @@ import kotlinx.serialization.Serializable
 object Home : NavKey
 
 @Serializable
-data class StartupDetails(val id: Long) : NavKey
+data class StartupDetails(val id: Int) : NavKey

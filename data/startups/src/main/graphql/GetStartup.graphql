@@ -1,0 +1,12 @@
+query GetStartup($id: ID!) {
+  startup(documentId: $id) {
+    startupId
+    description
+    title
+    category {
+      categoryId
+      title
+    }
+    location
+  }
+}

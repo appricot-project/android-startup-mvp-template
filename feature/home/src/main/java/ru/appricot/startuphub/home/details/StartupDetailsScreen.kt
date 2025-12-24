@@ -24,7 +24,7 @@ fun StartupDetailsScreen(viewModel: StartupDetailsViewModel, onBackClick: () -> 
 }
 
 @Composable
-fun Content(id: Long?, onButtonClick: () -> Unit, modifier: Modifier = Modifier) {
+fun Content(id: Int?, onButtonClick: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()

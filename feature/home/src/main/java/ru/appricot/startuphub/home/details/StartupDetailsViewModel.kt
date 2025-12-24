@@ -7,10 +7,10 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel(assistedFactory = StartupDetailsViewModel.Factory::class)
-class StartupDetailsViewModel @AssistedInject constructor(@Assisted val id: Long) : ViewModel() {
+class StartupDetailsViewModel @AssistedInject constructor(@Assisted val id: Int) : ViewModel() {
 
     @AssistedFactory
     interface Factory {
-        fun create(id: Long): StartupDetailsViewModel
+        fun create(id: Int): StartupDetailsViewModel
     }
 }

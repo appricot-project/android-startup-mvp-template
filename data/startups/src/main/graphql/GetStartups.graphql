@@ -1,0 +1,14 @@
+query GetStartups {
+  startups {
+    startupId
+    title
+    description
+    location
+    category {
+      categoryId
+      title
+    }
+    createdAt
+    updatedAt
+  }
+}

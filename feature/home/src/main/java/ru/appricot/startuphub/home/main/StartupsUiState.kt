@@ -1,5 +1,7 @@
 package ru.appricot.startuphub.home.main
 
+import ru.appricot.startuphub.startups.model.StartupModel
+
 sealed interface StartupsUiState {
 
     data object Loading : StartupsUiState

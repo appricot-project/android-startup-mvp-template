@@ -1,6 +1,8 @@
-package ru.appricot.startuphub.home.main
+package ru.appricot.startuphub.startups.model
 
-data class StartupModel(val id: Long, val name: String?, val category: String?, val city: String?) {
+import ru.appricot.startuphub.graphql.startups.GetStartupsQuery
+
+data class StartupModel(val id: Int, val name: String?, val category: String?, val city: String?) {
     companion object {
         fun test(): List<StartupModel> = listOf(
             // AI startups
@@ -17,6 +19,13 @@ data class StartupModel(val id: Long, val name: String?, val category: String?, 
             StartupModel(7, "HeartWell", "Health", "London"),
             StartupModel(8, "NewLife", "Health", "Washington"),
             StartupModel(9, "Free Life", "Health", "Moscow"),
+        )
+
+        fun from(dto: GetStartupsQuery.Startup): StartupModel = StartupModel(
+            id = dto.startupId ?: 0,
+            name = dto.title,
+            city = dto.location,
+            category = dto.category?.title,
         )
     }
 }

@@ -18,9 +18,10 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.appricot.designsystem.component.BasicLoader
 import ru.appricot.designsystem.component.TopAppBar
+import ru.appricot.startuphub.startups.model.StartupModel
 
 @Composable
-fun HomeScreen(onDetailsClick: (Long) -> Unit, modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(onDetailsClick: (Int) -> Unit, modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltViewModel()) {
     val startupsState by viewModel.state.collectAsStateWithLifecycle()
     Content(
         startupsState = startupsState,
