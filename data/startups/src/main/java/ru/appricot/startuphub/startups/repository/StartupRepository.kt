@@ -1,18 +1,15 @@
 package ru.appricot.startuphub.startups.repository
 
 import ru.appricot.startuphub.startups.model.StartupModel
-import ru.appricot.startuphub.startups.source.StartupsRemoteDataSource
+import ru.appricot.startuphub.startups.source.RemoteStartupsDataSource
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StartupRepository @Inject constructor(private val remoteDataStartupRepository: StartupsRemoteDataSource) {
+class StartupRepository @Inject constructor(private val remoteDataStartupRepository: RemoteStartupsDataSource) {
 
     suspend fun getStartups(): List<StartupModel> = remoteDataStartupRepository.getStartups()
-        .filterNotNull()
-        .map {
-            StartupModel.from(it)
-        }
+        .orEmpty()
 
     /*    suspend fun getStartup(id: String): Result<GetStartupQuery.Startup?> {
             return try {

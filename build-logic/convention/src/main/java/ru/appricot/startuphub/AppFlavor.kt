@@ -77,8 +77,7 @@ fun Project.configureFlavors(
                     }
 
                     val localProps = gradleLocalProperties(rootDir, providers)
-                    val authKey = localProps.getProperty("graphql.auth.token")
-                        localProps.getProperty("signing.keyAlias") ?: error("Missing graphql.auth.token in local.properties")
+                    val authKey = localProps.getProperty("graphql.auth.token") ?: error("Missing graphql.auth.token in local.properties")
                     buildConfigField("String", "GRAPHQL_AUTH_KEY", "\"$authKey\"")
                 }
             }

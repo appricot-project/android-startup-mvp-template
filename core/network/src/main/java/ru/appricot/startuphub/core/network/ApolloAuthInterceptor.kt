@@ -14,7 +14,7 @@ class ApolloAuthInterceptor @Inject constructor() : ApolloInterceptor {
             request.newBuilder()
                 .addHttpHeader(
                     "Authorization",
-                    "Bearer ${BuildConfig.GRAPHQL_AUTH_TOKEN}",
+                    "Bearer ${BuildConfig.GRAPHQL_AUTH_KEY}",
                 )
                 .build(),
         )

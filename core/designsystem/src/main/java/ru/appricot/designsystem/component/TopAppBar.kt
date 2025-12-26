@@ -4,7 +4,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -24,11 +23,11 @@ fun TopAppBar(modifier: Modifier = Modifier, title: String? = null, titleTextSty
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
+        /*colors = TopAppBarDefaults.topAppBarColors(
             containerColor = HubAppTheme.colors.secondaryBackground,
             navigationIconContentColor = HubAppTheme.colors.primaryColorText,
             titleContentColor = HubAppTheme.colors.primaryColorText,
             actionIconContentColor = HubAppTheme.colors.primaryColorText,
-        ),
+        ),*/
     )
 }

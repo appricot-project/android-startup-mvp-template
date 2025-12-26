@@ -19,10 +19,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.appricot.designsystem.component.BasicLoader
 import ru.appricot.designsystem.component.TopAppBar
 import ru.appricot.startuphub.startups.model.StartupModel
+import ru.appricot.startuphub.ui.ErrorAlert
 
 @Composable
 fun HomeScreen(onDetailsClick: (Int) -> Unit, modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltViewModel()) {
     val startupsState by viewModel.state.collectAsStateWithLifecycle()
+    ErrorAlert(viewModel.errors)
     Content(
         startupsState = startupsState,
         onDetailsClick = { onDetailsClick(it.id) },
@@ -65,6 +67,8 @@ fun Content(startupsState: StartupsUiState, onDetailsClick: (StartupModel) -> Un
                         }
                     },
                 )
+
+            else -> Unit
         }
     }
 }
