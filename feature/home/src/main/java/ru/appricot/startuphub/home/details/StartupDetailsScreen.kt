@@ -28,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -181,7 +182,7 @@ fun ContentData(
 fun StartupImage(imageUrl: String?, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+            .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.surface),
     ) {
         if (imageUrl.isNullOrEmpty()) {
@@ -204,41 +205,54 @@ fun StartupImage(imageUrl: String?, modifier: Modifier = Modifier) {
                     .data(imageUrl)
                     .crossfade(true)
                     .build(),
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillBounds,
             )
-
-            Image(
-                painter = painter,
+            /*AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imageUrl)
+                    .crossfade(true)
+                    .build(),
+                //placeholder = painterResource(R.drawable.placeholder),
                 contentDescription = stringResource(R.string.details_painter_image),
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillBounds,
                 modifier = Modifier.fillMaxSize(),
-            )
+            )*/
+            val state by painter.state.collectAsState()
+            when (state) {
+                is AsyncImagePainter.State.Loading ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.3f)),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        CircularProgressIndicator(color = Color.White)
+                    }
 
-            if (painter.state is AsyncImagePainter.State.Loading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.3f)),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    CircularProgressIndicator(color = Color.White)
-                }
-            }
-
-            if (painter.state is AsyncImagePainter.State.Error) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.surface),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Image,
-                        contentDescription = stringResource(R.string.details_painter_error),
-                        modifier = Modifier.size(64.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                is AsyncImagePainter.State.Success ->
+                    Image(
+                        painter = painter,
+                        contentDescription = stringResource(R.string.details_painter_image),
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier.fillMaxSize(),
                     )
-                }
+
+                is AsyncImagePainter.State.Error ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.surface),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Image,
+                            contentDescription = stringResource(R.string.details_painter_error),
+                            modifier = Modifier.size(64.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+
+                else -> Unit
             }
         }
     }

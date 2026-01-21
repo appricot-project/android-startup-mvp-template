@@ -12,4 +12,5 @@ dependencies {
     implementation(project(":data:startups"))
     implementation(libs.androidx.compose.ui)
     implementation(libs.coil.compose)
+    implementation(libs.coil.network)
 }
