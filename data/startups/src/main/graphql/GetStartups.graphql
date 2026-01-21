@@ -1,14 +1,23 @@
 query GetStartups {
-  startups {
-    startupId
-    title
-    description
-    location
-    category {
-      categoryId
+  startups_connection(pagination: { page: 1, pageSize: 999 }) {
+    nodes {
+      startupId
+      documentId
       title
+      description
+      location
+      category {
+        categoryId
+        title
+      }
+      createdAt
+      updatedAt
     }
-    createdAt
-    updatedAt
+    pageInfo {
+      page
+      pageSize
+      pageCount
+      total
+    }
   }
 }

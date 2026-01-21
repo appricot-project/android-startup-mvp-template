@@ -10,4 +10,6 @@ android {
 dependencies {
     implementation(project(":feature:home_api"))
     implementation(project(":data:startups"))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.coil.compose)
 }

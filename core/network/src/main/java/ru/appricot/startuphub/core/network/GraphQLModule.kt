@@ -66,6 +66,6 @@ object GraphQLModule {
         .okHttpClient(okHttpClient)
         .interceptors(interceptors = interceptors.toList())
         .normalizedCache(cacheFactory)
-        .fetchPolicy(FetchPolicy.CacheAndNetwork)
+        .fetchPolicy(FetchPolicy.NetworkFirst)
         .build()
 }

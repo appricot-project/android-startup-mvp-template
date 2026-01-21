@@ -22,7 +22,7 @@ import ru.appricot.startuphub.startups.model.StartupModel
 import ru.appricot.startuphub.ui.ErrorAlert
 
 @Composable
-fun HomeScreen(onDetailsClick: (Int) -> Unit, modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(onDetailsClick: (String) -> Unit, modifier: Modifier = Modifier, viewModel: HomeViewModel = hiltViewModel()) {
     val startupsState by viewModel.state.collectAsStateWithLifecycle()
     ErrorAlert(viewModel.errors)
     Content(

@@ -11,10 +11,11 @@ class RemoteStartupsDataSource @Inject constructor(private val apolloClient: Apo
     suspend fun getStartups(): List<StartupModel> = withContext(Dispatchers.IO) {
         apolloClient.query(GetStartupsQuery()).execute()
             .dataAssertNoErrors
-            .startups
-            .filterNotNull()
-            .map {
+            .startups_connection
+            ?.nodes
+            ?.map {
                 StartupModel.from(it)
             }
+            .orEmpty()
     }
 }

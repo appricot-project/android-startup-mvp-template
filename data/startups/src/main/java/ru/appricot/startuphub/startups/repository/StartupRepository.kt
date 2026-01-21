@@ -1,28 +1,20 @@
 package ru.appricot.startuphub.startups.repository
 
 import ru.appricot.startuphub.startups.model.StartupModel
+import ru.appricot.startuphub.startups.source.RemoteStartupDataSource
 import ru.appricot.startuphub.startups.source.RemoteStartupsDataSource
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StartupRepository @Inject constructor(private val remoteDataStartupRepository: RemoteStartupsDataSource) {
+class StartupRepository @Inject constructor(
+    private val remoteDataStartupsRepository: RemoteStartupsDataSource,
+    private val remoteDataStartupRepository: RemoteStartupDataSource,
+) {
 
-    suspend fun getStartups(): List<StartupModel> = remoteDataStartupRepository.getStartups()
-        .orEmpty()
+    suspend fun getStartups(): List<StartupModel> = remoteDataStartupsRepository.getStartups()
 
-    /*    suspend fun getStartup(id: String): Result<GetStartupQuery.Startup?> {
-            return try {
-                val response = apolloClient.query(GetStartupQuery(id = id)).execute()
-                if (response.hasErrors()) {
-                    Result.failure(Exception(response.errors?.first()?.message))
-                } else {
-                    Result.success(response.data?.startup)
-                }
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
-        }*/
+    suspend fun getStartup(id: String) = remoteDataStartupRepository.getStartup(id)
 
     /*suspend fun createStartup(input: CreateStartupMutation.StartupInput): Result<CreateStartupMutation.CreateStartup> {
         return try {
