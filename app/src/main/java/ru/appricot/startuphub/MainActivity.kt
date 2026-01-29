@@ -13,7 +13,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
@@ -25,6 +30,7 @@ import ru.appricot.navigation.EntryProviderInstaller
 import ru.appricot.navigation.Navigator
 import ru.appricot.navigation.rememberNavigationState
 import ru.appricot.navigation.toEntries
+import ru.appricot.profileapi.Profile
 import ru.appricot.startuphub.authapi.Auth
 import ru.appricot.startuphub.homeapi.Home
 import javax.inject.Inject
@@ -37,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
     private val topLevelRoots = mapOf(
         Home to NavBarItem(icon = Icons.Default.Home, title = "Home", description = "Home"),
-        Auth to NavBarItem(icon = Icons.Default.AccountCircle, title = "Profile", description = "Profile"),
+        Profile to NavBarItem(icon = Icons.Default.AccountCircle, title = "Profile", description = "Profile"),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +54,19 @@ class MainActivity : ComponentActivity() {
                 startRoute = Home,
                 topLevelRoutes = topLevelRoots.keys,
             )
-            val navigator = remember { Navigator(navigationState) }
+            var isLoggedIn by rememberSaveable {
+                mutableStateOf(false)
+            }
+            LaunchedEffect(key1 = Unit) {
+                // TODO: observe authorization token value and update isLoggedIn variable
+            }
+            val navigator = remember {
+                Navigator(
+                    state = navigationState,
+                    onNavigateToRestrictedKey = { redirectToKey -> Auth(redirectToKey) },
+                    isLoggedIn = { isLoggedIn },
+                )
+            }
             val entryProvider = entryProvider {
                 entryBuilders.forEach { builder ->
                     this.builder(navigator)

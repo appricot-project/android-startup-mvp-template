@@ -2,9 +2,10 @@ package ru.appricot.startuphub.authapi
 
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
+import ru.appricot.navigation.ConditionalNavKey
 
 @Serializable
-object Auth : NavKey
+data class Auth(val redirectToKey: ConditionalNavKey? = null) : ConditionalNavKey
 
 @Serializable
 object SignIn : NavKey

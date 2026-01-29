@@ -1,7 +1,9 @@
 package ru.appricot.profileapi
 
-import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
+import ru.appricot.navigation.ConditionalNavKey
 
 @Serializable
-object Profile : NavKey
+object Profile : ConditionalNavKey {
+    override fun requiresLogin(): Boolean = true
+}

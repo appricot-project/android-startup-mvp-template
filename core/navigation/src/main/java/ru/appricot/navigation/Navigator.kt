@@ -4,13 +4,28 @@ import androidx.navigation3.runtime.NavKey
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 
 @ActivityRetainedScoped
-class Navigator(val state: NavigationState) {
+class Navigator(
+    val state: NavigationState,
+    private val onNavigateToRestrictedKey: (targetKey: ConditionalNavKey?) -> ConditionalNavKey,
+    private val isLoggedIn: () -> Boolean,
+) {
     fun navigate(route: NavKey) {
-        if (route in state.backStacks.keys) {
-            // This is a top level route, just switch to it?
-            state.topLevelRoute = route
+        if (route is ConditionalNavKey && route.requiresLogin() && !isLoggedIn()) {
+            val loginKey = onNavigateToRestrictedKey(route)
+            if (route in state.backStacks.keys) {
+                // This is a top level route, just switch to it?
+                state.topLevelRoute = route
+                state.backStacks[route]?.add(loginKey)
+            } else {
+                state.backStacks[state.topLevelRoute]?.add(route)
+            }
         } else {
-            state.backStacks[state.topLevelRoute]?.add(route)
+            if (route in state.backStacks.keys) {
+                // This is a top level route, just switch to it?
+                state.topLevelRoute = route
+            } else {
+                state.backStacks[state.topLevelRoute]?.add(route)
+            }
         }
     }
 
