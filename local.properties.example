@@ -1,0 +1,12 @@
+# This is an example local.properties file.
+# Copy this file to local.properties and fill in your actual values.
+# local.properties is git-ignored and will never be committed to the repository.
+
+# GraphQL Authentication Token
+# Add your GraphQL API authentication token here
+#graphql.auth.token=your_graphql_auth_token_here
+
+# Signing configuration (if needed)
+# signing.keyAlias=your_key_alias
+# signing.storePassword=your_store_password
+# signing.keyPassword=your_key_password

@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.appricot.designsystem.theme.StartupHubTheme
+import ru.appricot.startuphub.startups.model.StartupModel
 import ru.apprictor.startuphub.home.BuildConfig
 
 @Composable
@@ -145,7 +146,7 @@ private fun StartupItemAIPreview() {
         Surface {
             StartupCard(
                 startup = StartupModel(
-                    id = 1,
+                    id = "1",
                     name = "NeuroGen",
                     category = "AI",
                     city = "Moscow",
@@ -163,7 +164,7 @@ private fun StartupItemFintechPreview() {
         Surface {
             StartupCard(
                 startup = StartupModel(
-                    id = 5,
+                    id = "5",
                     name = "PayWave",
                     category = "Fintech",
                     city = "Washington",
@@ -181,7 +182,7 @@ private fun StartupItemHealthPreview() {
         Surface {
             StartupCard(
                 startup = StartupModel(
-                    id = 7,
+                    id = "7",
                     name = "HeartWell",
                     category = "Health",
                     city = "London",
@@ -198,7 +199,7 @@ private fun StartupItemLongNamePreview() {
         Surface {
             StartupCard(
                 startup = StartupModel(
-                    id = 10,
+                    id = "10",
                     name = "Very Long Startup Name That Should Be Truncated",
                     category = "AI",
                     city = "San Francisco",
@@ -216,7 +217,7 @@ private fun StartupItemNullValuesPreview() {
         Surface {
             StartupCard(
                 startup = StartupModel(
-                    id = 11,
+                    id = "11",
                     name = null,
                     category = null,
                     city = null,

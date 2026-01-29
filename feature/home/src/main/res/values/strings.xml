@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main.title">Home</string>
+    <string name="main.search.placeholder">Search startups…</string>
+    <string name="details.share">Share</string>
+    <string name="details.title">Details</string>
+    <string name="details.location">Location</string>
+    <string name="details.painter.error">Something went wrong</string>
+    <string name="details.painter.placeholder">Placeholder</string>
+    <string name="details.painter.image">Startup cover image</string>
+</resources>

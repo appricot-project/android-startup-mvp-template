@@ -4,6 +4,7 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.ApplicationProductFlavor
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.ProductFlavor
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.gradle.api.Project
 
 @Suppress("EnumEntryName")
@@ -26,7 +27,7 @@ enum class AppFlavor(
             BuildConfigField(
                 "String",
                 "BASE_URL",
-                "\"https://stage.startuphub.appricot.ru/api/\""
+                "\"cms.apps.appricot.ru/graphql\""
             ),
         ),
         "ru.appricot.startuphub.stage"
@@ -37,7 +38,7 @@ enum class AppFlavor(
             BuildConfigField(
                 "String",
                 "BASE_URL",
-                "\"https://startuphub.appricot.ru/api/\""
+                "\"https://cms.apps.appricot.ru/graphql\""
             ),
         ),
         "ru.appricot.startuphub"
@@ -74,6 +75,10 @@ fun Project.configureFlavors(
                             buildConfigField(field.type, field.name, field.value)
                         else resValue("string", field.name, field.value)
                     }
+
+                    val localProps = gradleLocalProperties(rootDir, providers)
+                    val authKey = localProps.getProperty("graphql.auth.token") ?: error("Missing graphql.auth.token in local.properties")
+                    buildConfigField("String", "GRAPHQL_AUTH_KEY", "\"$authKey\"")
                 }
             }
         }

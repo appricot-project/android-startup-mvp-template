@@ -1,5 +1,6 @@
 package ru.appricot.designsystem.theme
 
+import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -7,11 +8,15 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 @Composable
 fun StartupHubTheme(
@@ -33,6 +38,16 @@ fun StartupHubTheme(
         }
 
         else -> m3ColorScheme(darkTheme)
+    }
+
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            (view.context as Activity).window.apply {
+                this.statusBarColor = colorScheme.surface.toArgb()
+                WindowCompat.getInsetsController(this, view).isAppearanceLightStatusBars = !isDarkState.value
+            }
+        }
     }
 
     CompositionLocalProvider(

@@ -21,11 +21,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
 
                 add("implementation", libs.findLibrary("androidx.lifecycle.viewmodel.navigation3").get())
                 add("implementation", libs.findLibrary("androidx.hilt.lifecycle.viewModelCompose").get())
-                //add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
-                //add("implementation", libs.findLibrary("retrofit.core").get())
-                //add("implementation", libs.findLibrary("hilt.navigation.fragment").get())
                 add("implementation", libs.findLibrary("timber").get())
-                //add("implementation", libs.findLibrary("material").get())
             }
         }
     }

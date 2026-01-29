@@ -1,0 +1,15 @@
+query GetStartup($id: ID!) {
+  startup(documentId: $id) {
+    documentId
+    startupId
+    ImageURL {
+      url
+    }
+    title
+    description
+    location
+    category {
+      title
+    }
+  }
+}

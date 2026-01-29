@@ -9,6 +9,9 @@ android {
 
 dependencies {
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.core)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
 
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)
