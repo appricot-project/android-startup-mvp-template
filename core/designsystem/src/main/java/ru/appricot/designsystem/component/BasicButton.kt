@@ -45,7 +45,7 @@ fun BasicButton(onClick: () -> Unit, modifier: Modifier = Modifier, text: String
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodyMedium,
             color = if (enabled) HubAppTheme.colors.primaryBackground else HubAppTheme.colors.secondaryColorText,
             modifier = Modifier.padding(vertical = 6.dp),
         )

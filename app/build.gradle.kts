@@ -67,6 +67,9 @@ dependencies {
     implementation(project(":feature:profile_api"))
     implementation(project(":feature:profile"))
 
+    implementation(project(":feature:auth_api"))
+    implementation(project(":feature:auth"))
+
     implementation(libs.androidx.junit)
     debugImplementation(libs.leakcanary.android)
     androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")

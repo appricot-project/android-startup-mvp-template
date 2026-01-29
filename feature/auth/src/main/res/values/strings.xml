@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_to_startup_hub">Welcome</string>
+    <string name="choose_authentication_method">Choose how to continue</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Your Account</string>
+</resources>

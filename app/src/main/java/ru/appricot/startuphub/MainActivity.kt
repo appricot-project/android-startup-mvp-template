@@ -25,7 +25,7 @@ import ru.appricot.navigation.EntryProviderInstaller
 import ru.appricot.navigation.Navigator
 import ru.appricot.navigation.rememberNavigationState
 import ru.appricot.navigation.toEntries
-import ru.appricot.profileapi.Profile
+import ru.appricot.startuphub.authapi.Auth
 import ru.appricot.startuphub.homeapi.Home
 import javax.inject.Inject
 
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
     private val topLevelRoots = mapOf(
         Home to NavBarItem(icon = Icons.Default.Home, title = "Home", description = "Home"),
-        Profile to NavBarItem(icon = Icons.Default.AccountCircle, title = "Profile", description = "Profile"),
+        Auth to NavBarItem(icon = Icons.Default.AccountCircle, title = "Profile", description = "Profile"),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
