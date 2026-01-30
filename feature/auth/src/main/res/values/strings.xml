@@ -7,4 +7,9 @@
     <string name="enter_your_email_to_continue">Enter your email to continue</string>
     <string name="email_address">Email address</string>
     <string name="next">Next</string>
+    <string name="signin_validation_mail_empty">Email cannot be empty</string>
+    <string name="signin_validation_mail_incorrect">Please enter a valid email address</string>
+    <string name="confirmation_title">Confirm Your Email</string>
+    <string name="confirmation_description">We\'ve sent a confirmation code to %s\nPlease check your email and enter the 6-digit confirmation code to continue.</string>
+    <string name="confirmation_action">Continue</string>
 </resources>

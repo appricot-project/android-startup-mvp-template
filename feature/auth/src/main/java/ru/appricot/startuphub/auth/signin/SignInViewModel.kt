@@ -29,13 +29,13 @@ class SignInViewModel @Inject constructor(private val authorizationUseCase: Auth
     private val _email = MutableStateFlow("")
     val email: StateFlow<String> = _email.asStateFlow()
 
-    private val _emailValidationError = MutableStateFlow<String?>(null)
-    val emailValidationError: StateFlow<String?> = _emailValidationError.asStateFlow()
+    private val _emailValidationError = MutableStateFlow<Int?>(null)
+    val emailValidationError: StateFlow<Int?> = _emailValidationError.asStateFlow()
 
     private val _state = MutableStateFlow<SignInUiState>(SignInUiState.Idle)
     val state: StateFlow<SignInUiState> = _state.asStateFlow()
 
-    private val emailValidator = Validator(
+    private val emailValidator = Validator<String>(
         EmailRules.notEmpty,
         EmailRules.validFormat,
     )
@@ -69,7 +69,7 @@ class SignInViewModel @Inject constructor(private val authorizationUseCase: Auth
         _email.update { newEmail }
     }
 
-    fun signIn() {
+    fun signIn(onSuccess: (String) -> Unit) {
         val currentEmail = _email.value
 
         // Validate email immediately on sign in attempt
@@ -85,7 +85,10 @@ class SignInViewModel @Inject constructor(private val authorizationUseCase: Auth
 
             flow {
                 authorizationUseCase(currentEmail)
-                    .onSuccess { emit(SignInUiState.Success) }
+                    .onSuccess {
+                        emit(SignInUiState.Success)
+                        onSuccess(currentEmail)
+                    }
                     .onFailure {
                         val errorState = SignInUiState.Error(it)
                         emit(errorState)

@@ -12,3 +12,6 @@ object SignIn : NavKey
 
 @Serializable
 data class SignUp(val email: String? = null) : NavKey
+
+@Serializable
+data class EmailConfirmation(val email: String) : NavKey

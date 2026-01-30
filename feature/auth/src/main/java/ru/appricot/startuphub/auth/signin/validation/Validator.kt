@@ -1,5 +1,7 @@
 package ru.appricot.startuphub.auth.signin.validation
 
+import androidx.annotation.StringRes
+
 /**
  * Base interface for validation rules
  */
@@ -9,7 +11,8 @@ fun interface Rule<T> {
      * @param value The value to validate
      * @return Error message if validation fails, null if valid
      */
-    fun validate(value: T): String?
+    @StringRes
+    fun validate(value: T): Int?
 }
 
 /**
@@ -22,7 +25,8 @@ class Validator<T>(private vararg val rules: Rule<T>) {
      * @param value The value to validate
      * @return Error message from the first failed rule, or null if all rules pass
      */
-    fun validate(value: T): String? {
+    @StringRes
+    fun validate(value: T): Int? {
         for (rule in rules) {
             val error = rule.validate(value)
             if (error != null) {

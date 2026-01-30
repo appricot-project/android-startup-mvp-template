@@ -1,6 +1,7 @@
 package ru.appricot.startuphub.auth.signin.validation
 
 import android.util.Patterns
+import ru.apprictor.startuphub.auth.R
 
 /**
  * Email validation rules collection
@@ -12,7 +13,7 @@ object EmailRules {
      */
     val notEmpty = Rule<String> { email ->
         if (email.isBlank()) {
-            "Email cannot be empty"
+            R.string.signin_validation_mail_empty
         } else {
             null
         }
@@ -23,29 +24,7 @@ object EmailRules {
      */
     val validFormat = Rule<String> { email ->
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            "Please enter a valid email address"
-        } else {
-            null
-        }
-    }
-
-    /**
-     * Rule to check if email has minimum length (3 characters for basic format)
-     */
-    val minLength = Rule<String> { email ->
-        if (email.length < 3) {
-            "Email must be at least 3 characters long"
-        } else {
-            null
-        }
-    }
-
-    /**
-     * Rule to check if email contains @ symbol
-     */
-    val containsAtSymbol = Rule<String> { email ->
-        if (!email.contains("@")) {
-            "Email must contain @ symbol"
+            R.string.signin_validation_mail_incorrect
         } else {
             null
         }

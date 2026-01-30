@@ -23,4 +23,5 @@ dependencies {
     api(libs.androidx.compose.ui.util)
 
     implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.compose.ui.text)
 }
