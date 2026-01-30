@@ -7,6 +7,7 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.multibindings.IntoSet
 import ru.appricot.navigation.EntryProviderInstaller
 import ru.appricot.startuphub.auth.main.AuthChoiceScreen
+import ru.appricot.startuphub.auth.signin.SignInScreen
 import ru.appricot.startuphub.authapi.Auth
 import ru.appricot.startuphub.authapi.SignIn
 import ru.appricot.startuphub.authapi.SignUp
@@ -21,6 +22,12 @@ class AuthModule {
             AuthChoiceScreen(
                 onLoginClick = { navigator.navigate(SignIn) },
                 onRegisterClick = { navigator.navigate(SignUp()) },
+            )
+        }
+        entry<SignIn> {
+            SignInScreen(
+                onNavigateToCode = { navigator.navigate(SignIn) },
+                onBackClick = { navigator.goBack() },
             )
         }
     }

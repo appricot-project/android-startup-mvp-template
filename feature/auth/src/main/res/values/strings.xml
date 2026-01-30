@@ -4,4 +4,7 @@
     <string name="choose_authentication_method">Choose how to continue</string>
     <string name="sign_in">Sign In</string>
     <string name="create_account">Create Your Account</string>
+    <string name="enter_your_email_to_continue">Enter your email to continue</string>
+    <string name="email_address">Email address</string>
+    <string name="next">Next</string>
 </resources>

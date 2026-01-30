@@ -11,7 +11,5 @@ android {
 dependencies {
     implementation(project(":feature:auth_api"))
     implementation(project(":core:designsystem"))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.navigation3.runtime)
+    implementation(project(":data:auth"))
 }

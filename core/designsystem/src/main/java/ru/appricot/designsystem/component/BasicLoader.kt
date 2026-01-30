@@ -9,15 +9,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ru.appricot.designsystem.theme.HubAppTheme
 
 @Composable
-fun BasicLoader(modifier: Modifier = Modifier) {
+fun BasicLoader(modifier: Modifier = Modifier, backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surfaceVariant),
+            .background(backgroundColor),
         contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator(
