@@ -1,5 +1,6 @@
 package ru.appricot.startuphub.auth.signin
 
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,10 @@ import ru.appricot.startuphub.auth.signin.validation.Validator
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val authorizationUseCase: AuthorizationUseCase) : ViewModel() {
+class SignInViewModel @Inject constructor(
+    private val authorizationUseCase: AuthorizationUseCase,
+    private val authorizationManager: AuthorizationManager,
+) : ViewModel() {
     private val _errors = MutableSharedFlow<SignInUiState.Error>()
     val errors = _errors.asSharedFlow()
 
@@ -99,5 +103,27 @@ class SignInViewModel @Inject constructor(private val authorizationUseCase: Auth
                     _state.update { newState }
                 }
         }
+    }
+
+    private val _authIntent = MutableSharedFlow<Intent>()
+    val authIntent = _authIntent.asSharedFlow()
+
+    fun onNextClick() {
+        viewModelScope.launch {
+            _authIntent.emit(authorizationManager.provideAuthorizationIntent())
+        }
+    }
+
+    fun authResult(data: Intent?) {
+        authorizationManager.handleAuthResponseIntent(data) { result ->
+            result
+                .onSuccess { state -> }
+                .onFailure { error -> }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        authorizationManager.dispose()
     }
 }

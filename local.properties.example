@@ -4,9 +4,11 @@
 
 # GraphQL Authentication Token
 # Add your GraphQL API authentication token here
-#graphql.auth.token=your_graphql_auth_token_here
+# graphql.auth.token=your_graphql_auth_token_here
 
 # Signing configuration (if needed)
 # signing.keyAlias=your_key_alias
 # signing.storePassword=your_store_password
 # signing.keyPassword=your_key_password
+
+# keycloak.secret=your_keycloak_secret_here

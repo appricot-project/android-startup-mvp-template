@@ -29,6 +29,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        addManifestPlaceholders(
+            mapOf("appAuthRedirectScheme" to "pitchdeck")
+        )
     }
     base.archivesName.set("StartupHub-${defaultConfig.versionName}(${defaultConfig.versionCode})")
     signingConfigs {

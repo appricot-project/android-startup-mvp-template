@@ -29,6 +29,11 @@ enum class AppFlavor(
                 "BASE_URL",
                 "\"cms.apps.appricot.ru/graphql\""
             ),
+            BuildConfigField(
+                "String",
+                "BASE_AUTH_URL",
+                "\"https://api.demo.appricot.ru/api/keycloak/\""
+            ),
         ),
         "ru.appricot.startuphub.stage"
     ),
@@ -39,6 +44,11 @@ enum class AppFlavor(
                 "String",
                 "BASE_URL",
                 "\"https://cms.apps.appricot.ru/graphql\""
+            ),
+            BuildConfigField(
+                "String",
+                "BASE_AUTH_URL",
+                "\"https://api.demo.appricot.ru/api/keycloak/\""
             ),
         ),
         "ru.appricot.startuphub"
@@ -78,7 +88,9 @@ fun Project.configureFlavors(
 
                     val localProps = gradleLocalProperties(rootDir, providers)
                     val authKey = localProps.getProperty("graphql.auth.token") ?: error("Missing graphql.auth.token in local.properties")
+                    val keycloakSecret = localProps.getProperty("keycloak.secret") ?: error("Missing keycloak.secret in local.properties")
                     buildConfigField("String", "GRAPHQL_AUTH_KEY", "\"$authKey\"")
+                    buildConfigField("String", "KEYCLOAK_SECRET", "\"$keycloakSecret\"")
                 }
             }
         }

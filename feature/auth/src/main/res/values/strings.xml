@@ -9,6 +9,15 @@
     <string name="next">Next</string>
     <string name="signin_validation_mail_empty">Email cannot be empty</string>
     <string name="signin_validation_mail_incorrect">Please enter a valid email address</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_your_details_to_create_account">Enter your details to create account</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="signup_validation_mail_empty">Email cannot be empty</string>
+    <string name="signup_validation_mail_incorrect">Please enter a valid email address</string>
+    <string name="signup_validation_name_empty">Name cannot be empty</string>
+    <string name="signup_validation_name_min_length">Name must be at least 2 characters long</string>
+    <string name="signup_validation_name_invalid_characters">Name can only contain letters, spaces, and hyphens</string>
     <string name="confirmation_title">Confirm Your Email</string>
     <string name="confirmation_description">We\'ve sent a confirmation code to %s\nPlease check your email and enter the 6-digit confirmation code to continue.</string>
     <string name="confirmation_action">Continue</string>

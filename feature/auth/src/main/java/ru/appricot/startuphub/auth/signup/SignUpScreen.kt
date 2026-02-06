@@ -1,7 +1,5 @@
-package ru.appricot.startuphub.auth.signin
+package ru.appricot.startuphub.auth.signup
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,20 +16,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import ru.appricot.designsystem.component.BasicAppTextField
 import ru.appricot.designsystem.component.BasicButton
 import ru.appricot.designsystem.component.BasicLoader
@@ -39,30 +36,25 @@ import ru.appricot.startuphub.ui.ErrorAlert
 import ru.apprictor.startuphub.auth.R
 
 @Composable
-fun SignInScreen(
-    onNavigateToCode: (String) -> Unit,
+fun SignUpScreen(
+    onSuccessRegistration: () -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SignInViewModel = hiltViewModel<SignInViewModel>(),
+    viewModel: SignUpViewModel = hiltViewModel<SignUpViewModel>(),
 ) {
     val email by viewModel.email.collectAsStateWithLifecycle()
+    val firstName by viewModel.firstName.collectAsStateWithLifecycle()
+    val lastName by viewModel.lastName.collectAsStateWithLifecycle()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val emailValidationError by viewModel.emailValidationError.collectAsStateWithLifecycle()
+    val firstNameValidationError by viewModel.firstNameValidationError.collectAsStateWithLifecycle()
+    val lastNameValidationError by viewModel.lastNameValidationError.collectAsStateWithLifecycle()
+
+    val doOnSuccess by rememberUpdatedState(onSuccessRegistration)
 
     ErrorAlert(viewModel.errors)
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val customTabLauncher =
-        rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.StartActivityForResult(),
-        ) { result ->
-            viewModel.authResult(result.data)
-        }
-    LaunchedEffect(Unit) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            viewModel.authIntent.collect { intent ->
-                customTabLauncher.launch(intent)
-            }
-        }
+    LaunchedEffect(state) {
+        if (state is SignUpUiState.Registered) doOnSuccess()
     }
     Box(
         modifier = modifier
@@ -70,32 +62,43 @@ fun SignInScreen(
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        if (state is SignInUiState.Loading) {
+        if (state is SignUpUiState.Loading) {
             Spacer(modifier = Modifier.height(16.dp))
             BasicLoader(
                 modifier = Modifier.align(Alignment.Center),
                 backgroundColor = Color.Transparent,
             )
         }
-        SignInContent(
+
+        SignUpContent(
             email = email,
+            firstName = firstName,
+            lastName = lastName,
             state = state,
             emailValidationError = emailValidationError,
+            firstNameValidationError = firstNameValidationError,
+            lastNameValidationError = lastNameValidationError,
             updateEmail = viewModel::updateEmail,
-            onNextClick = {
-                viewModel.onNextClick()
-            },
+            updateFirstName = viewModel::updateFirstName,
+            updateLastName = viewModel::updateLastName,
+            onSignUpClick = { viewModel.signUp() },
         )
     }
 }
 
 @Composable
-fun SignInContent(
-    state: SignInUiState,
+fun SignUpContent(
+    state: SignUpUiState,
     email: String,
+    firstName: String,
+    lastName: String,
     emailValidationError: Int?,
+    firstNameValidationError: Int?,
+    lastNameValidationError: Int?,
     updateEmail: (String) -> Unit,
-    onNextClick: () -> Unit,
+    updateFirstName: (String) -> Unit,
+    updateLastName: (String) -> Unit,
+    onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -107,7 +110,7 @@ fun SignInContent(
             .verticalScroll(rememberScrollState()),
     ) {
         Text(
-            text = stringResource(R.string.sign_in),
+            text = stringResource(R.string.sign_up),
             style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
@@ -116,7 +119,7 @@ fun SignInContent(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = stringResource(R.string.enter_your_email_to_continue),
+            text = stringResource(R.string.enter_your_details_to_create_account),
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.outlineVariant,
@@ -130,19 +133,57 @@ fun SignInContent(
             placeholder = stringResource(R.string.email_address),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Done,
+                imeAction = ImeAction.Next,
             ),
-            enabled = state !is SignInUiState.Loading,
+            enabled = state !is SignUpUiState.Loading,
             errorMessage = if (emailValidationError != null) stringResource(emailValidationError) else null,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        BasicAppTextField(
+            value = firstName,
+            onValueChange = updateFirstName,
+            placeholder = stringResource(R.string.first_name),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next,
+                capitalization = KeyboardCapitalization.Words,
+            ),
+            enabled = state !is SignUpUiState.Loading,
+            errorMessage = if (firstNameValidationError != null) stringResource(firstNameValidationError) else null,
+            modifier = Modifier.fillMaxWidth(),
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        BasicAppTextField(
+            value = lastName,
+            onValueChange = updateLastName,
+            placeholder = stringResource(R.string.last_name),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done,
+                capitalization = KeyboardCapitalization.Words,
+            ),
+            enabled = state !is SignUpUiState.Loading,
+            errorMessage = if (lastNameValidationError != null) stringResource(lastNameValidationError) else null,
             modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
         BasicButton(
-            onClick = onNextClick,
+            onClick = onSignUpClick,
             text = stringResource(R.string.next),
-            enabled = state !is SignInUiState.Loading && email.isNotBlank() && emailValidationError == null,
+            enabled = state !is SignUpUiState.Loading &&
+                email.isNotBlank() &&
+                firstName.isNotBlank() &&
+                lastName.isNotBlank() &&
+                emailValidationError == null &&
+                firstNameValidationError == null &&
+                lastNameValidationError == null,
             modifier = Modifier.fillMaxWidth(),
         )
     }

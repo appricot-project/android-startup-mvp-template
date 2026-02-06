@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "ru.appricot.startuphub.auth"
 }
+
+dependencies {
+    implementation(project(":core:network"))
+}

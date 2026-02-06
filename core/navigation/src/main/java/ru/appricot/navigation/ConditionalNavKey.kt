@@ -13,6 +13,14 @@ import kotlinx.serialization.Serializable
  * to navigate to it
  */
 @Serializable
-interface ConditionalNavKey : NavKey {
+sealed interface ConditionalNavKey : NavKey {
     fun requiresLogin(): Boolean = false
+}
+
+@Serializable
+data class Auth(val redirectToKey: ConditionalNavKey? = null) : ConditionalNavKey
+
+@Serializable
+data object Profile : ConditionalNavKey {
+    override fun requiresLogin(): Boolean = true
 }

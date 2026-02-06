@@ -12,4 +12,5 @@ dependencies {
     implementation(project(":feature:auth_api"))
     implementation(project(":core:designsystem"))
     implementation(project(":data:auth"))
+    api(libs.openid)
 }

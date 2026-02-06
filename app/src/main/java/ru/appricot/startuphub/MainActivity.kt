@@ -26,12 +26,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.appricot.designsystem.component.NavBarItem
 import ru.appricot.designsystem.component.NavigationBar
 import ru.appricot.designsystem.theme.StartupHubTheme
+import ru.appricot.navigation.Auth
 import ru.appricot.navigation.EntryProviderInstaller
 import ru.appricot.navigation.Navigator
+import ru.appricot.navigation.Profile
 import ru.appricot.navigation.rememberNavigationState
 import ru.appricot.navigation.toEntries
-import ru.appricot.profileapi.Profile
-import ru.appricot.startuphub.authapi.Auth
 import ru.appricot.startuphub.homeapi.Home
 import javax.inject.Inject
 

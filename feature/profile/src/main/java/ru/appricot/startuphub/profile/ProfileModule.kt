@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.multibindings.IntoSet
 import ru.appricot.navigation.EntryProviderInstaller
-import ru.appricot.profileapi.Profile
+import ru.appricot.navigation.Profile
 import ru.appricot.startuphub.homeapi.Home
 import ru.appricot.startuphub.profile.main.ProfileScreen
 

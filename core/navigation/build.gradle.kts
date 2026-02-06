@@ -3,6 +3,7 @@ plugins {
     id("appricot.android.library.compose")
     id("appricot.android.hilt")
     id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {

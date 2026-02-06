@@ -10,6 +10,8 @@ import com.apollographql.apollo.cache.normalized.normalizedCache
 import com.apollographql.apollo.interceptor.ApolloInterceptor
 import com.apollographql.apollo.network.okHttpClient
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,11 +20,13 @@ import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object GraphQLModule {
+object NetworkModule {
 
     @Provides
     @BaseUrl
@@ -53,6 +57,14 @@ object GraphQLModule {
             .addInterceptor(loggingInterceptor)
             .addInterceptor(chuckerInterceptor)
             .build()
+
+    @Provides
+    @Singleton
+    fun providesGson(): Gson = GsonBuilder().create()
+
+    @Provides
+    @Singleton
+    fun providesGsonConverterFactory(gson: Gson): Converter.Factory = GsonConverterFactory.create(gson)
 
     @Provides
     @Singleton

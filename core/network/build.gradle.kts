@@ -14,6 +14,9 @@ dependencies {
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp.core)
     implementation(libs.okhttp.logging)
+    implementation(libs.gson)
+    api(libs.retrofit.core)
+    api(libs.retrofit.converter.gson)
     releaseImplementation(libs.chucker.release)
     debugImplementation(libs.chucker.debug)
 }
