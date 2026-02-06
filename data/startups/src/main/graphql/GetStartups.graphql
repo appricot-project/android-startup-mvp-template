@@ -1,7 +1,6 @@
 query GetStartups {
   startups_connection(pagination: { page: 1, pageSize: 999 }) {
     nodes {
-      startupId
       documentId
       title
       description
@@ -12,6 +11,7 @@ query GetStartups {
       }
       createdAt
       updatedAt
+      ownerEmail
     }
     pageInfo {
       page

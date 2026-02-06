@@ -25,6 +25,11 @@ apollo {
         generateDataBuilders.set(true)
         useSemanticNaming.set(true)
         generateFragmentImplementations.set(true)
+
+        introspection {
+            endpointUrl.set("https://cms.apps.appricot.ru/graphql")
+            schemaFile.set(file("src/main/graphql/schema.json"))
+        }
     }
 }
 

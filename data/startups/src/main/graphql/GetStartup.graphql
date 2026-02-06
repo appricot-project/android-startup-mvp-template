@@ -1,7 +1,7 @@
 query GetStartup($id: ID!) {
   startup(documentId: $id) {
     documentId
-    startupId
+    ownerEmail
     ImageURL {
       url
     }
