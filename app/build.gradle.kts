@@ -72,6 +72,7 @@ dependencies {
 
     implementation(project(":feature:auth_api"))
     implementation(project(":feature:auth"))
+    implementation(project(":data:auth"))
 
     implementation(libs.androidx.junit)
     debugImplementation(libs.leakcanary.android)

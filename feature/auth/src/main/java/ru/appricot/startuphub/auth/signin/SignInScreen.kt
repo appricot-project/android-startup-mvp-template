@@ -37,11 +37,13 @@ import ru.appricot.designsystem.component.BasicButton
 import ru.appricot.designsystem.component.BasicLoader
 import ru.appricot.startuphub.ui.ErrorAlert
 import ru.apprictor.startuphub.auth.R
+import timber.log.Timber
 
 @Composable
 fun SignInScreen(
     onNavigateToCode: (String) -> Unit,
     onBackClick: () -> Unit,
+    onSuccessAuthorizationFlow: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignInViewModel = hiltViewModel<SignInViewModel>(),
 ) {
@@ -49,6 +51,12 @@ fun SignInScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val emailValidationError by viewModel.emailValidationError.collectAsStateWithLifecycle()
 
+    if (state is SignInUiState.Success) {
+        if ((state as SignInUiState.Success).authState.isAuthorized) {
+            Timber.d((state as SignInUiState.Success).authState.idToken.toString())
+            onSuccessAuthorizationFlow()
+        }
+    }
     ErrorAlert(viewModel.errors)
     val lifecycleOwner = LocalLifecycleOwner.current
     val customTabLauncher =

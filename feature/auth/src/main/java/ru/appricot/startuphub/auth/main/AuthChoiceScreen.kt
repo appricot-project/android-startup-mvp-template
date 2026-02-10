@@ -1,5 +1,6 @@
 package ru.appricot.startuphub.auth.main
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,7 +26,10 @@ import ru.apprictor.startuphub.auth.R
 @Composable
 fun AuthChoiceScreen(onLoginClick: () -> Unit, onRegisterClick: () -> Unit, modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier.padding(top = 48.dp, bottom = 16.dp).fillMaxSize(),
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.background)
+            .padding(top = 48.dp, bottom = 16.dp)
+            .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
         Column(

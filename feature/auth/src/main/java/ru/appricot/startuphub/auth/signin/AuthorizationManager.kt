@@ -10,22 +10,27 @@ import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ClientSecretPost
 import net.openid.appauth.TokenRequest
+import ru.appricot.startuphub.auth.AuthStateManager
 import javax.inject.Inject
 
-class AuthorizationManager @Inject constructor(private val authorizationService: AuthorizationService) {
+class AuthorizationManager @Inject constructor(
+    private val authorizationService: AuthorizationService,
+    private val authStateManager: AuthStateManager,
+    private val authConfig: AuthConfig,
+) {
     fun provideAuthorizationIntent(): Intent {
         val authRequest =
             AuthorizationRequest.Builder(
                 AuthorizationServiceConfiguration(
-                    AuthConfig.AUTH_URI,
-                    AuthConfig.TOKEN_URI,
+                    authConfig.authUri(),
+                    authConfig.tokenUri(),
                 ),
-                AuthConfig.CLIENT_ID,
-                AuthConfig.RESPONSE_TYPE,
-                AuthConfig.CALLBACK_URL,
+                authConfig.clientId(),
+                authConfig.responseType(),
+                authConfig.callbackUri(),
             )
-                .setScope(AuthConfig.SCOPE)
-                .setRedirectUri(AuthConfig.CALLBACK_URL)
+                .setScope(authConfig.scope())
+                .setRedirectUri(authConfig.callbackUri())
                 .build()
 
         val customTabsIntent = CustomTabsIntent.Builder().build()
@@ -42,6 +47,7 @@ class AuthorizationManager @Inject constructor(private val authorizationService:
         val exception = AuthorizationException.fromIntent(intent)
         val tokenExchangeRequest = AuthorizationResponse.fromIntent(intent)
             ?.createTokenExchangeRequest()
+        authStateManager.updateAfterAuthorization(authResp, exception)
         when {
             exception != null -> onComplete(Result.failure(exception))
 
@@ -49,8 +55,9 @@ class AuthorizationManager @Inject constructor(private val authorizationService:
                 performTokenRequest(
                     authorizationService,
                     tokenExchangeRequest,
-                    AuthState(authResp, exception),
-                    onComplete = { onComplete(Result.success(it)) },
+                    onComplete = {
+                        onComplete(Result.success(it))
+                    },
                     onError = { exception ->
                         exception?.let { onComplete(Result.failure(it)) }
                     },
@@ -66,18 +73,17 @@ class AuthorizationManager @Inject constructor(private val authorizationService:
     private fun performTokenRequest(
         authService: AuthorizationService,
         tokenRequest: TokenRequest,
-        authState: AuthState,
         onComplete: (AuthState) -> Unit,
         onError: (Exception?) -> Unit,
     ) {
         authService.performTokenRequest(
             tokenRequest,
-            ClientSecretPost(AuthConfig.CLIENT_SECRET),
+            ClientSecretPost(authConfig.clientSecret()),
         ) { response, ex ->
             when {
                 response != null -> {
-                    authState.update(response, ex)
-                    onComplete(authState)
+                    authStateManager.updateAfterTokenResponse(response, ex)
+                    onComplete(authStateManager.getCurrent())
                 }
 
                 else -> onError(ex)

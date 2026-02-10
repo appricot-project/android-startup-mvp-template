@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import net.openid.appauth.AuthState
 import ru.appricot.startuphub.auth.domain.AuthorizationUseCase
 import ru.appricot.startuphub.auth.signin.validation.EmailRules
 import ru.appricot.startuphub.auth.signin.validation.Validator
@@ -90,7 +91,7 @@ class SignInViewModel @Inject constructor(
             flow {
                 authorizationUseCase(currentEmail)
                     .onSuccess {
-                        emit(SignInUiState.Success)
+                        // emit(SignInUiState.Success())
                         onSuccess(currentEmail)
                     }
                     .onFailure {
@@ -117,8 +118,16 @@ class SignInViewModel @Inject constructor(
     fun authResult(data: Intent?) {
         authorizationManager.handleAuthResponseIntent(data) { result ->
             result
-                .onSuccess { state -> }
-                .onFailure { error -> }
+                .onSuccess { state: AuthState ->
+                    viewModelScope.launch {
+                        _state.emit(SignInUiState.Success(state))
+                    }
+                }
+                .onFailure { error ->
+                    viewModelScope.launch {
+                        _errors.emit(SignInUiState.Error(error))
+                    }
+                }
         }
     }
 

@@ -20,6 +20,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +34,7 @@ import ru.appricot.navigation.Navigator
 import ru.appricot.navigation.Profile
 import ru.appricot.navigation.rememberNavigationState
 import ru.appricot.navigation.toEntries
+import ru.appricot.startuphub.auth.AuthStateManager
 import ru.appricot.startuphub.homeapi.Home
 import javax.inject.Inject
 
@@ -40,6 +43,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var entryBuilders: Set<@JvmSuppressWildcards EntryProviderInstaller>
+
+    @Inject
+    lateinit var authStateManager: AuthStateManager
 
     private val topLevelRoots = mapOf(
         Home to NavBarItem(icon = Icons.Default.Home, title = "Home", description = "Home"),
@@ -58,7 +64,11 @@ class MainActivity : ComponentActivity() {
                 mutableStateOf(false)
             }
             LaunchedEffect(key1 = Unit) {
-                // TODO: observe authorization token value and update isLoggedIn variable
+                lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+                    authStateManager.authState().collect { authState ->
+                        isLoggedIn = authState?.isAuthorized == true
+                    }
+                }
             }
             val navigator = remember {
                 Navigator(
