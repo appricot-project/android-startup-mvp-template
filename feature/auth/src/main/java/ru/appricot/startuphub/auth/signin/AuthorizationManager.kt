@@ -2,6 +2,8 @@ package ru.appricot.startuphub.auth.signin
 
 import android.content.Intent
 import androidx.browser.customtabs.CustomTabsIntent
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
@@ -41,27 +43,29 @@ class AuthorizationManager @Inject constructor(
         )
     }
 
-    fun handleAuthResponseIntent(intent: Intent?, onComplete: (Result<AuthState>) -> Unit) {
+    suspend fun handleAuthResponseIntent(intent: Intent?, onComplete: (Result<AuthState>) -> Unit) {
         if (intent == null) return
-        val authResp = AuthorizationResponse.fromIntent(intent)
-        val exception = AuthorizationException.fromIntent(intent)
-        val tokenExchangeRequest = AuthorizationResponse.fromIntent(intent)
-            ?.createTokenExchangeRequest()
-        authStateManager.updateAfterAuthorization(authResp, exception)
-        when {
-            exception != null -> onComplete(Result.failure(exception))
+        coroutineScope {
+            val authResp = AuthorizationResponse.fromIntent(intent)
+            val exception = AuthorizationException.fromIntent(intent)
+            val tokenExchangeRequest = AuthorizationResponse.fromIntent(intent)
+                ?.createTokenExchangeRequest()
+            authStateManager.updateAfterAuthorization(authResp, exception)
+            when {
+                exception != null -> onComplete(Result.failure(exception))
 
-            tokenExchangeRequest != null -> {
-                performTokenRequest(
-                    authorizationService,
-                    tokenExchangeRequest,
-                    onComplete = {
-                        onComplete(Result.success(it))
-                    },
-                    onError = { exception ->
-                        exception?.let { onComplete(Result.failure(it)) }
-                    },
-                )
+                tokenExchangeRequest != null -> {
+                    performTokenRequest(
+                        authorizationService,
+                        tokenExchangeRequest,
+                        onComplete = {
+                            onComplete(Result.success(it))
+                        },
+                        onError = { exception ->
+                            exception?.let { onComplete(Result.failure(it)) }
+                        },
+                    )
+                }
             }
         }
     }
@@ -70,20 +74,22 @@ class AuthorizationManager @Inject constructor(
         authorizationService.dispose()
     }
 
-    private fun performTokenRequest(
+    private suspend fun performTokenRequest(
         authService: AuthorizationService,
         tokenRequest: TokenRequest,
         onComplete: (AuthState) -> Unit,
         onError: (Exception?) -> Unit,
-    ) {
+    ) = coroutineScope {
         authService.performTokenRequest(
             tokenRequest,
             ClientSecretPost(authConfig.clientSecret()),
         ) { response, ex ->
             when {
                 response != null -> {
-                    authStateManager.updateAfterTokenResponse(response, ex)
-                    onComplete(authStateManager.getCurrent())
+                    runBlocking {
+                        authStateManager.updateAfterTokenResponse(response, ex)
+                        onComplete(authStateManager.getCurrent())
+                    }
                 }
 
                 else -> onError(ex)

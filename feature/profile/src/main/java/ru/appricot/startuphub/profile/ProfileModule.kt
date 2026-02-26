@@ -7,7 +7,6 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.multibindings.IntoSet
 import ru.appricot.navigation.EntryProviderInstaller
 import ru.appricot.navigation.Profile
-import ru.appricot.startuphub.homeapi.Home
 import ru.appricot.startuphub.profile.main.ProfileScreen
 
 @Module
@@ -18,7 +17,7 @@ class ProfileModule {
     fun provideEntryProviderInstaller(): EntryProviderInstaller = { navigator ->
         entry<Profile> {
             ProfileScreen(
-                onHomeClick = { navigator.navigate(Home) },
+                onLogoutClick = { navigator.goBack() },
             )
         }
     }

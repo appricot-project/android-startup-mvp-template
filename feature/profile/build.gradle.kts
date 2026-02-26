@@ -10,4 +10,5 @@ android {
 dependencies {
     implementation(project(":feature:profile_api"))
     implementation(project(":feature:home_api"))
+    implementation(project(":data:auth"))
 }

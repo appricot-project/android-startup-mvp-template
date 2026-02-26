@@ -1,5 +1,6 @@
 package ru.appricot.startuphub.auth
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -7,6 +8,8 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
+import ru.appricot.startuphub.auth.model.UserProfile
+import ru.appricot.startuphub.auth.model.UserProfileFactory
 import javax.inject.Singleton
 
 @Module
@@ -18,4 +21,11 @@ object AuthDataModule {
         Retrofit.Builder().baseUrl(BuildConfig.BASE_AUTH_URL)
             .addConverterFactory(converterFactory).client(okHttpClient).build()
             .create(AuthApi::class.java)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface AuthDataStaticModule {
+    @Binds
+    fun providesUserProfileFactory(impl: UserProfileFactory): UserProfile.Factory
 }

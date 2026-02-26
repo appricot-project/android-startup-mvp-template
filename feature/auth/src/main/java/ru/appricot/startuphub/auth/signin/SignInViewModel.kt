@@ -21,6 +21,7 @@ import net.openid.appauth.AuthState
 import ru.appricot.startuphub.auth.domain.AuthorizationUseCase
 import ru.appricot.startuphub.auth.signin.validation.EmailRules
 import ru.appricot.startuphub.auth.signin.validation.Validator
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -116,18 +117,21 @@ class SignInViewModel @Inject constructor(
     }
 
     fun authResult(data: Intent?) {
-        authorizationManager.handleAuthResponseIntent(data) { result ->
-            result
-                .onSuccess { state: AuthState ->
-                    viewModelScope.launch {
-                        _state.emit(SignInUiState.Success(state))
+        viewModelScope.launch {
+            authorizationManager.handleAuthResponseIntent(data) { result ->
+                Timber.d(result.toString())
+                result
+                    .onSuccess { state: AuthState ->
+                        viewModelScope.launch {
+                            _state.emit(SignInUiState.Success(state))
+                        }
                     }
-                }
-                .onFailure { error ->
-                    viewModelScope.launch {
-                        _errors.emit(SignInUiState.Error(error))
+                    .onFailure { error ->
+                        viewModelScope.launch {
+                            _errors.emit(SignInUiState.Error(error))
+                        }
                     }
-                }
+            }
         }
     }
 

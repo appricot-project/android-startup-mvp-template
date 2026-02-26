@@ -6,7 +6,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
@@ -15,20 +16,19 @@ import net.openid.appauth.TokenResponse
 import org.json.JSONException
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicReference
-import java.util.concurrent.locks.ReentrantLock
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AuthStateManager @Inject constructor(private val dataStore: DataStore<Preferences>) {
     companion object {
-        val KEY_AUTH_STATE = stringPreferencesKey("auth-state")
+        private val KEY_AUTH_STATE = stringPreferencesKey("auth-state")
     }
 
-    private val mPrefsLock: ReentrantLock = ReentrantLock()
+    private val mPrefsLock = Mutex()
     private val mCurrentAuthState: AtomicReference<AuthState> = AtomicReference()
 
-    fun getCurrent(): AuthState {
+    suspend fun getCurrent(): AuthState {
         if (mCurrentAuthState.get() != null) {
             return mCurrentAuthState.get()
         }
@@ -47,25 +47,25 @@ class AuthStateManager @Inject constructor(private val dataStore: DataStore<Pref
         }
     }
 
-    fun replace(state: AuthState): AuthState {
+    suspend fun replace(state: AuthState): AuthState {
         writeState(state)
         mCurrentAuthState.set(state)
         return state
     }
 
-    fun updateAfterAuthorization(response: AuthorizationResponse?, ex: AuthorizationException?): AuthState {
+    suspend fun updateAfterAuthorization(response: AuthorizationResponse?, ex: AuthorizationException?): AuthState {
         val current = getCurrent()
         current.update(response, ex)
         return replace(current)
     }
 
-    fun updateAfterTokenResponse(response: TokenResponse?, ex: AuthorizationException?): AuthState {
+    suspend fun updateAfterTokenResponse(response: TokenResponse?, ex: AuthorizationException?): AuthState {
         val current = getCurrent()
         current.update(response, ex)
         return replace(current)
     }
 
-    fun updateAfterRegistration(response: RegistrationResponse?, ex: AuthorizationException?): AuthState {
+    suspend fun updateAfterRegistration(response: RegistrationResponse?, ex: AuthorizationException?): AuthState {
         val current = getCurrent()
         if (ex != null) {
             return current
@@ -75,10 +75,9 @@ class AuthStateManager @Inject constructor(private val dataStore: DataStore<Pref
         return replace(current)
     }
 
-    private fun readState(): AuthState {
-        mPrefsLock.lock()
-        try {
-            val currentState: String? = runBlocking { dataStore.data.map { it[KEY_AUTH_STATE] }.firstOrNull() }
+    private suspend fun readState(): AuthState {
+        mPrefsLock.withLock {
+            val currentState: String? = dataStore.data.map { it[KEY_AUTH_STATE] }.firstOrNull()
             if (currentState == null) {
                 return AuthState()
             }
@@ -89,27 +88,20 @@ class AuthStateManager @Inject constructor(private val dataStore: DataStore<Pref
                 Timber.w("Failed to deserialize stored auth state - discarding")
                 return AuthState()
             }
-        } finally {
-            mPrefsLock.unlock()
         }
     }
 
-    private fun writeState(state: AuthState?) {
-        mPrefsLock.lock()
-        try {
-            runBlocking {
-                dataStore.updateData {
-                    it.toMutablePreferences().also { preferences ->
-                        if (state == null) {
-                            preferences.remove(KEY_AUTH_STATE)
-                        } else {
-                            preferences[KEY_AUTH_STATE] = state.jsonSerializeString()
-                        }
+    private suspend fun writeState(state: AuthState?) {
+        mPrefsLock.withLock {
+            dataStore.updateData {
+                it.toMutablePreferences().also { preferences ->
+                    if (state == null) {
+                        preferences.remove(KEY_AUTH_STATE)
+                    } else {
+                        preferences[KEY_AUTH_STATE] = state.jsonSerializeString()
                     }
                 }
             }
-        } finally {
-            mPrefsLock.unlock()
         }
     }
 }

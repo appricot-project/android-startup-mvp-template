@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import ru.appricot.designsystem.theme.HubAppTheme
 
 @Composable
-fun BasicLoader(modifier: Modifier = Modifier, backgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant) {
+fun BasicLoader(modifier: Modifier = Modifier, backgroundColor: Color = MaterialTheme.colorScheme.background) {
     Box(
         modifier = modifier
             .fillMaxSize()
